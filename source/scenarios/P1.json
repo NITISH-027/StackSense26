@@ -1,0 +1,63 @@
+{
+  "scenario_id": "P1",
+  "project": {
+    "name": "DevFolio",
+    "type": "content_site",
+    "description": "Personal portfolio with project pages and a weekly blog. Content written in Markdown by the owner.",
+    "platforms": [
+      "web"
+    ]
+  },
+  "scale": {
+    "traffic_pattern": "steady",
+    "workload": "read_heavy",
+    "users_at_launch": 200,
+    "users_12_months": 3000,
+    "peak_concurrent_users": 50,
+    "data_volume_gb_12_months": 1
+  },
+  "team": {
+    "has_devops": false,
+    "size": 1,
+    "experience": "beginner",
+    "languages": [
+      "javascript",
+      "html",
+      "css"
+    ]
+  },
+  "budget": {
+    "monthly_infra_usd": 0
+  },
+  "timeline": {
+    "mvp_weeks": 2
+  },
+  "infrastructure": {
+    "cloud_preference": "any",
+    "deployment_model": "managed_cloud",
+    "data_residency": "none",
+    "existing_systems": []
+  },
+  "requirements": {
+    "realtime": false,
+    "offline_support": false,
+    "full_text_search": false,
+    "file_media_storage": false,
+    "payments": false,
+    "auth": "none",
+    "multi_tenant": false,
+    "ml_features": "none",
+    "seo_critical": true,
+    "availability": "99",
+    "p95_latency_ms": null
+  },
+  "compliance": [],
+  "priorities": {
+    "cost": 5,
+    "time_to_market": 4,
+    "scalability": 1,
+    "performance": 3,
+    "maintainability": 3,
+    "security": 2
+  }
+}

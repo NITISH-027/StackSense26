@@ -1,0 +1,5 @@
+{
+  "scenario_id": "EDGE1",
+  "project": {"name": "HalfSpec", "type": "web_app"},
+  "team": {"size": 2}
+}

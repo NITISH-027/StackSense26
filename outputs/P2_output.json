@@ -1,0 +1,249 @@
+{
+  "scenario_id": "P2",
+  "engine_version": "1.0.0",
+  "status": "ok",
+  "summary": "Monolith architecture: Next.js (React) frontend, Node.js (NestJS, TypeScript) backend, PostgreSQL database on Google Cloud (Cloud Run + Cloud SQL).",
+  "architecture_style": "monolith",
+  "stack": {
+    "frontend": {
+      "choice": "Next.js (React)",
+      "justification": "SEO-critical pages need server-side rendering / pre-rendering; matches team language(s): javascript, typescript; well suited to marketplace. React with SSR/SSG; the most adopted React meta-framework. Strong SEO and ecosystem.",
+      "driven_by": [
+        "project.platforms",
+        "requirements.seo_critical",
+        "team.languages",
+        "project.type"
+      ],
+      "alternatives": [
+        {
+          "choice": "Astro",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "SvelteKit",
+          "why_not": "Weaker server-side rendering for SEO-critical pages."
+        },
+        {
+          "choice": "Vue 3 + Nuxt",
+          "why_not": "Weaker server-side rendering for SEO-critical pages."
+        }
+      ],
+      "tradeoffs": [
+        "Tied to React ecosystem; Vercel-style hosting assumed for the smoothest path."
+      ]
+    },
+    "backend": {
+      "choice": "Node.js (NestJS, TypeScript)",
+      "justification": "Matches team language(s): javascript, typescript; well suited to marketplace; strong realtime/WebSocket support. Structured TypeScript framework; first-class WebSocket support and a huge ecosystem.",
+      "driven_by": [
+        "project.type",
+        "team.languages",
+        "requirements.realtime",
+        "team.experience"
+      ],
+      "alternatives": [
+        {
+          "choice": "Node.js (Express)",
+          "why_not": "Weaker realtime support."
+        },
+        {
+          "choice": "Python (Django)",
+          "why_not": "Weaker realtime support."
+        },
+        {
+          "choice": "Python (FastAPI)",
+          "why_not": "Weaker realtime support."
+        }
+      ],
+      "tradeoffs": [
+        "Single-threaded event loop; CPU-heavy work needs worker queues."
+      ]
+    },
+    "database": {
+      "choice": "PostgreSQL",
+      "justification": "Well suited to marketplace; fits a balanced workload. The default relational choice: JSONB, full-text search, strong integrity, huge ecosystem.",
+      "driven_by": [
+        "project.type",
+        "scale.workload",
+        "requirements.multi_tenant",
+        "scale.users_12_months"
+      ],
+      "alternatives": [
+        {
+          "choice": "Firebase Firestore",
+          "why_not": "Higher running cost for a cost-sensitive project."
+        },
+        {
+          "choice": "MySQL",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "SQLite",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": [
+        "Vertical scaling first; very high write scale needs read replicas/partitioning."
+      ]
+    },
+    "hosting": {
+      "choice": "Google Cloud (Cloud Run + Cloud SQL)",
+      "justification": "First-class support for the chosen framework(s). Cloud Run scales containers to zero; Mumbai/Delhi regions; full compliance coverage.",
+      "driven_by": [
+        "budget.monthly_infra_usd",
+        "team.has_devops",
+        "infrastructure.deployment_model",
+        "infrastructure.data_residency",
+        "compliance",
+        "infrastructure.cloud_preference"
+      ],
+      "alternatives": [
+        {
+          "choice": "Microsoft Azure (App Service + Azure SQL)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "AWS (EC2/ECS + RDS)",
+          "why_not": "Heavier to operate."
+        }
+      ],
+      "tradeoffs": [
+        "Cloud SQL costs at scale; some GCP services lag AWS in India regions."
+      ]
+    },
+    "supporting": [
+      {
+        "layer": "search",
+        "choice": "PostgreSQL full-text search",
+        "justification": "Built-in tsvector search; plenty for moderate datasets, no extra service to run.",
+        "driven_by": [
+          "requirements.full_text_search"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "realtime",
+        "choice": "Socket.IO (self-hosted)",
+        "justification": "WebSocket layer with rooms and fallbacks; you scale it yourself (Redis adapter).",
+        "driven_by": [
+          "requirements.realtime"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "payments",
+        "choice": "Razorpay",
+        "justification": "UPI, cards and subscriptions for India; PCI scope stays with the PSP.",
+        "driven_by": [
+          "requirements.payments",
+          "infrastructure.data_residency",
+          "compliance"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "storage",
+        "choice": "Google Cloud Storage",
+        "justification": "Object storage with India regions.",
+        "driven_by": [
+          "requirements.file_media_storage"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "auth",
+        "choice": "Firebase Authentication",
+        "justification": "Managed auth with phone OTP and social providers; generous free tier.",
+        "driven_by": [
+          "requirements.auth",
+          "compliance",
+          "infrastructure.data_residency"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "cache",
+        "choice": "Redis",
+        "justification": "In-memory cache for hot reads, sessions and rate limits.",
+        "driven_by": [
+          "scale.users_12_months",
+          "scale.workload"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "queue",
+        "choice": "BullMQ (Redis-based)",
+        "justification": "Background jobs on top of Redis; no extra broker for Node teams.",
+        "driven_by": [
+          "requirements.realtime",
+          "scale.traffic_pattern",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "other",
+        "choice": "React Native (Expo) mobile app",
+        "justification": "Web frontend does not cover the required mobile platforms; Expo ships Android/iOS from one JavaScript/TypeScript codebase, reusing the backend API.",
+        "driven_by": [
+          "project.platforms",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": [
+          "Some native modules require ejecting from Expo."
+        ]
+      },
+      {
+        "layer": "cdn",
+        "choice": "Cloudflare",
+        "justification": "Free-tier CDN, caching, WAF and DDoS protection.",
+        "driven_by": [
+          "requirements.seo_critical",
+          "scale.users_12_months"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "ci_cd",
+        "choice": "GitHub Actions",
+        "justification": "CI/CD next to the code; free tier covers small teams.",
+        "driven_by": [
+          "timeline.mvp_weeks"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "observability",
+        "choice": "Sentry (error tracking)",
+        "justification": "Error monitoring with a free tier; self-hostable if needed.",
+        "driven_by": [
+          "requirements.availability",
+          "team.has_devops"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      }
+    ]
+  },
+  "estimated_monthly_cost_usd": {
+    "min": 102,
+    "max": 624,
+    "assumptions": [
+      "Order-of-magnitude band, not a quote; real bills depend on traffic shape and discounts"
+    ]
+  },
+  "warnings": [],
+  "assumptions": [],
+  "validation_errors": []
+}

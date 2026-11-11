@@ -1,0 +1,64 @@
+{
+  "scenario_id": "P6",
+  "project": {
+    "name": "KhetSurvey",
+    "type": "other",
+    "description": "NGO field agents fill crop surveys with GPS-tagged photos in villages with intermittent 2G/3G. Devices are low-end Android phones (2 GB RAM). Data syncs when signal is available.",
+    "platforms": [
+      "android"
+    ]
+  },
+  "scale": {
+    "traffic_pattern": "spiky",
+    "workload": "write_heavy",
+    "users_at_launch": 300,
+    "users_12_months": 2000,
+    "peak_concurrent_users": 200,
+    "data_volume_gb_12_months": 100
+  },
+  "team": {
+    "has_devops": false,
+    "size": 2,
+    "experience": "mixed",
+    "languages": [
+      "javascript",
+      "python"
+    ]
+  },
+  "budget": {
+    "monthly_infra_usd": 100
+  },
+  "timeline": {
+    "mvp_weeks": 10
+  },
+  "infrastructure": {
+    "cloud_preference": "any",
+    "deployment_model": "managed_cloud",
+    "data_residency": "india",
+    "existing_systems": []
+  },
+  "requirements": {
+    "realtime": false,
+    "offline_support": true,
+    "full_text_search": false,
+    "file_media_storage": true,
+    "payments": false,
+    "auth": "phone_otp",
+    "multi_tenant": false,
+    "ml_features": "none",
+    "seo_critical": false,
+    "availability": "99",
+    "p95_latency_ms": null
+  },
+  "compliance": [
+    "dpdp"
+  ],
+  "priorities": {
+    "cost": 5,
+    "time_to_market": 4,
+    "scalability": 2,
+    "performance": 3,
+    "maintainability": 4,
+    "security": 3
+  }
+}

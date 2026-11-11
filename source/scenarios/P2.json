@@ -1,0 +1,66 @@
+{
+  "scenario_id": "P2",
+  "project": {
+    "name": "FixIt Now",
+    "type": "marketplace",
+    "description": "Customers book electricians and plumbers in two cities. Providers accept jobs, chat with customers and get paid. Android app for providers, web + Android for customers.",
+    "platforms": [
+      "web",
+      "android"
+    ]
+  },
+  "scale": {
+    "traffic_pattern": "steady",
+    "workload": "balanced",
+    "users_at_launch": 2000,
+    "users_12_months": 30000,
+    "peak_concurrent_users": 800,
+    "data_volume_gb_12_months": 50
+  },
+  "team": {
+    "has_devops": false,
+    "size": 3,
+    "experience": "intermediate",
+    "languages": [
+      "javascript",
+      "typescript",
+      "python"
+    ]
+  },
+  "budget": {
+    "monthly_infra_usd": 150
+  },
+  "timeline": {
+    "mvp_weeks": 8
+  },
+  "infrastructure": {
+    "cloud_preference": "any",
+    "deployment_model": "managed_cloud",
+    "data_residency": "india",
+    "existing_systems": []
+  },
+  "requirements": {
+    "realtime": true,
+    "offline_support": false,
+    "full_text_search": true,
+    "file_media_storage": true,
+    "payments": true,
+    "auth": "phone_otp",
+    "multi_tenant": false,
+    "ml_features": "none",
+    "seo_critical": true,
+    "availability": "99.9",
+    "p95_latency_ms": 500
+  },
+  "compliance": [
+    "dpdp"
+  ],
+  "priorities": {
+    "cost": 4,
+    "time_to_market": 5,
+    "scalability": 3,
+    "performance": 3,
+    "maintainability": 3,
+    "security": 3
+  }
+}

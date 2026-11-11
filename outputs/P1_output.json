@@ -1,0 +1,131 @@
+{
+  "scenario_id": "P1",
+  "engine_version": "1.0.0",
+  "status": "ok",
+  "summary": "Static architecture: Astro frontend, None backend, None database on Netlify.",
+  "architecture_style": "static",
+  "stack": {
+    "frontend": {
+      "choice": "Astro",
+      "justification": "SEO-critical pages need server-side rendering / pre-rendering; matches team language(s): javascript, html, css; well suited to content_site. Ships zero JS by default; islands for interactivity. Ideal for content and SEO-critical sites.",
+      "driven_by": [
+        "project.platforms",
+        "requirements.seo_critical",
+        "team.languages",
+        "project.type"
+      ],
+      "alternatives": [
+        {
+          "choice": "Plain HTML/CSS/JS",
+          "why_not": "Weaker server-side rendering for SEO-critical pages."
+        },
+        {
+          "choice": "SvelteKit",
+          "why_not": "Heavier to operate; higher running cost for a cost-sensitive project; weaker server-side rendering for SEO-critical pages."
+        },
+        {
+          "choice": "Next.js (React)",
+          "why_not": "Heavier to operate; higher running cost for a cost-sensitive project."
+        }
+      ],
+      "tradeoffs": [
+        "Interactive app-like features need islands/hydration."
+      ]
+    },
+    "backend": {
+      "choice": "None",
+      "justification": "Pure content site with no auth, payments, uploads or realtime: a static build plus managed form/comment services covers it, so no custom backend is warranted.",
+      "driven_by": [
+        "project.type",
+        "requirements.*"
+      ],
+      "alternatives": [],
+      "tradeoffs": []
+    },
+    "database": {
+      "choice": "None",
+      "justification": "No accounts, uploads or transactions: content can live in the repository/build pipeline, so no database server is justified.",
+      "driven_by": [
+        "project.type",
+        "requirements.*"
+      ],
+      "alternatives": [],
+      "tradeoffs": []
+    },
+    "hosting": {
+      "choice": "Netlify",
+      "justification": "First-class support for the chosen framework(s); free tier fits the $0 budget; no DevOps capacity, so a managed platform keeps operations near zero. Static + serverless functions with a generous free tier; no India region.",
+      "driven_by": [
+        "budget.monthly_infra_usd",
+        "team.has_devops",
+        "infrastructure.deployment_model",
+        "infrastructure.data_residency",
+        "compliance",
+        "infrastructure.cloud_preference"
+      ],
+      "alternatives": [
+        {
+          "choice": "Vercel",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Firebase (Hosting + Functions)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Render",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": [
+        "No India region; serverless-only compute model."
+      ]
+    },
+    "supporting": [
+      {
+        "layer": "cdn",
+        "choice": "Cloudflare",
+        "justification": "Free-tier CDN, caching, WAF and DDoS protection.",
+        "driven_by": [
+          "requirements.seo_critical",
+          "scale.users_12_months"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "ci_cd",
+        "choice": "GitHub Actions",
+        "justification": "CI/CD next to the code; free tier covers small teams.",
+        "driven_by": [
+          "timeline.mvp_weeks"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "observability",
+        "choice": "Sentry (error tracking)",
+        "justification": "Error monitoring with a free tier; self-hostable if needed.",
+        "driven_by": [
+          "requirements.availability",
+          "team.has_devops"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      }
+    ]
+  },
+  "estimated_monthly_cost_usd": {
+    "min": 0,
+    "max": 5,
+    "assumptions": [
+      "Netlify free tier covers the launch load",
+      "All components on free tiers; small buffer for overage or a custom domain",
+      "Order-of-magnitude band, not a quote; real bills depend on traffic shape and discounts"
+    ]
+  },
+  "warnings": [],
+  "assumptions": [],
+  "validation_errors": []
+}

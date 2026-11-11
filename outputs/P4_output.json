@@ -1,0 +1,229 @@
+{
+  "scenario_id": "P4",
+  "engine_version": "1.0.0",
+  "status": "ok",
+  "summary": "Modular monolith architecture: Angular frontend, Java (Spring Boot) backend, PostgreSQL database on AWS (EC2/ECS + RDS).",
+  "architecture_style": "modular_monolith",
+  "stack": {
+    "frontend": {
+      "choice": "Angular",
+      "justification": "Matches team language(s): typescript; well suited to fintech. Full framework with strong conventions and DI; favoured in enterprise teams.",
+      "driven_by": [
+        "project.platforms",
+        "requirements.seo_critical",
+        "team.languages",
+        "project.type"
+      ],
+      "alternatives": [
+        {
+          "choice": "Astro",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "React (SPA, Vite)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Next.js (React)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": []
+    },
+    "backend": {
+      "choice": "Java (Spring Boot)",
+      "justification": "Matches team language(s): java; well suited to fintech. Enterprise standard with deep ecosystem; heavier to run and slower to start with.",
+      "driven_by": [
+        "project.type",
+        "team.languages",
+        "requirements.realtime",
+        "team.experience"
+      ],
+      "alternatives": [
+        {
+          "choice": "Serverless functions (AWS Lambda / Cloud Run functions)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Node.js (NestJS, TypeScript)",
+          "why_not": "Weaker scaling story at the expected user volume."
+        },
+        {
+          "choice": "C# (.NET 8)",
+          "why_not": "Needs csharp, which the team does not list."
+        }
+      ],
+      "tradeoffs": []
+    },
+    "database": {
+      "choice": "PostgreSQL",
+      "justification": "Well suited to fintech; fits a balanced workload. The default relational choice: JSONB, full-text search, strong integrity, huge ecosystem.",
+      "driven_by": [
+        "project.type",
+        "scale.workload",
+        "requirements.multi_tenant",
+        "scale.users_12_months"
+      ],
+      "alternatives": [
+        {
+          "choice": "MySQL",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "DynamoDB",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "MongoDB",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": [
+        "Vertical scaling first; very high write scale needs read replicas/partitioning."
+      ]
+    },
+    "hosting": {
+      "choice": "AWS (EC2/ECS + RDS)",
+      "justification": "First-class support for the chosen framework(s). The most complete cloud: Mumbai/Hyderabad regions, every compliance programme; needs real ops skill.",
+      "driven_by": [
+        "budget.monthly_infra_usd",
+        "team.has_devops",
+        "infrastructure.deployment_model",
+        "infrastructure.data_residency",
+        "compliance",
+        "infrastructure.cloud_preference"
+      ],
+      "alternatives": [],
+      "tradeoffs": [
+        "Real operational burden: patching, scaling, IAM, billing complexity."
+      ]
+    },
+    "supporting": [
+      {
+        "layer": "payments",
+        "choice": "Razorpay",
+        "justification": "UPI, cards and subscriptions for India; PCI scope stays with the PSP.",
+        "driven_by": [
+          "requirements.payments",
+          "infrastructure.data_residency",
+          "compliance"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "storage",
+        "choice": "AWS S3",
+        "justification": "Object storage with India regions; the default for uploads at any scale.",
+        "driven_by": [
+          "requirements.file_media_storage"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "auth",
+        "choice": "Rolled JWT/OAuth in the backend",
+        "justification": "Framework-native auth (Django auth, Devise, Passport, etc.). No third-party dependency.",
+        "driven_by": [
+          "requirements.auth",
+          "compliance",
+          "infrastructure.data_residency"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "ml",
+        "choice": "Self-hosted open models (Ollama/vLLM on GPU VM)",
+        "justification": "Keeps data in your own infrastructure; needs a GPU and real ops.",
+        "driven_by": [
+          "requirements.ml_features",
+          "compliance"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "cache",
+        "choice": "Redis",
+        "justification": "In-memory cache for hot reads, sessions and rate limits.",
+        "driven_by": [
+          "scale.users_12_months",
+          "scale.workload"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "queue",
+        "choice": "AWS SQS + SNS",
+        "justification": "Managed queues, pay per request; zero broker operations.",
+        "driven_by": [
+          "requirements.realtime",
+          "scale.traffic_pattern",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "other",
+        "choice": "React Native (Expo) mobile app",
+        "justification": "Web frontend does not cover the required mobile platforms; Expo ships Android/iOS from one JavaScript/TypeScript codebase, reusing the backend API.",
+        "driven_by": [
+          "project.platforms",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": [
+          "Some native modules require ejecting from Expo."
+        ]
+      },
+      {
+        "layer": "cdn",
+        "choice": "AWS CloudFront",
+        "justification": "AWS-native CDN with India edge locations.",
+        "driven_by": [
+          "requirements.seo_critical",
+          "scale.users_12_months"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "ci_cd",
+        "choice": "GitHub Actions",
+        "justification": "CI/CD next to the code; free tier covers small teams.",
+        "driven_by": [
+          "timeline.mvp_weeks"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "observability",
+        "choice": "Prometheus + Grafana",
+        "justification": "Self-hosted metrics and dashboards; full control, some ops.",
+        "driven_by": [
+          "requirements.availability",
+          "team.has_devops"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      }
+    ]
+  },
+  "estimated_monthly_cost_usd": {
+    "min": 287,
+    "max": 1434,
+    "assumptions": [
+      "Compute scaled for >100k users (multiple instances / autoscaling)",
+      "~500 GB of storage/bandwidth at roughly $0.02-0.09/GB-month",
+      "Order-of-magnitude band, not a quote; real bills depend on traffic shape and discounts"
+    ]
+  },
+  "warnings": [],
+  "assumptions": [],
+  "validation_errors": []
+}

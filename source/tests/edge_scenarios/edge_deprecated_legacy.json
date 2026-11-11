@@ -1,0 +1,10 @@
+{
+  "scenario_id": "EDGE6",
+  "project": {"name": "OldShop", "type": "ecommerce", "platforms": ["web"]},
+  "scale": {"users_at_launch": 5000, "users_12_months": 40000},
+  "team": {"size": 3, "experience": "intermediate", "languages": ["php", "javascript"]},
+  "budget": {"monthly_infra_usd": 200},
+  "timeline": {"mvp_weeks": 10},
+  "infrastructure": {"existing_systems": ["AngularJS storefront", "MySQL 5.7", "jQuery"]},
+  "requirements": {"payments": true, "full_text_search": true, "seo_critical": true}
+}

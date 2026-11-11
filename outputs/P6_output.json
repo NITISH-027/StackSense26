@@ -1,0 +1,193 @@
+{
+  "scenario_id": "P6",
+  "engine_version": "1.0.0",
+  "status": "ok",
+  "summary": "Monolith architecture: React Native (Expo) frontend, Python (Django) backend, PostgreSQL database on Google Cloud (Cloud Run + Cloud SQL).",
+  "architecture_style": "monolith",
+  "stack": {
+    "frontend": {
+      "choice": "React Native (Expo)",
+      "justification": "Matches team language(s): javascript. One JavaScript/TypeScript codebase ships Android + iOS. Expo removes most native tooling pain.",
+      "driven_by": [
+        "project.platforms",
+        "requirements.seo_critical",
+        "team.languages",
+        "project.type"
+      ],
+      "alternatives": [
+        {
+          "choice": "Flutter",
+          "why_not": "Needs dart, which the team does not list."
+        },
+        {
+          "choice": "Native Android (Kotlin)",
+          "why_not": "Needs kotlin, which the team does not list."
+        }
+      ],
+      "tradeoffs": [
+        "Some native modules require ejecting from Expo.",
+        "Performance below fully native for heavy graphics."
+      ]
+    },
+    "backend": {
+      "choice": "Python (Django)",
+      "justification": "Matches team language(s): python. Batteries included: admin, ORM, auth, migrations. Very fast MVP delivery with sane defaults.",
+      "driven_by": [
+        "project.type",
+        "team.languages",
+        "requirements.realtime",
+        "team.experience"
+      ],
+      "alternatives": [
+        {
+          "choice": "Python (FastAPI)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Node.js (NestJS, TypeScript)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Node.js (Express)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": [
+        "Monolith-leaning; async/realtime needs Channels add-ons."
+      ]
+    },
+    "database": {
+      "choice": "PostgreSQL",
+      "justification": "Fits a write_heavy workload. The default relational choice: JSONB, full-text search, strong integrity, huge ecosystem.",
+      "driven_by": [
+        "project.type",
+        "scale.workload",
+        "requirements.multi_tenant",
+        "scale.users_12_months"
+      ],
+      "alternatives": [
+        {
+          "choice": "SQLite",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "MySQL",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "DynamoDB",
+          "why_not": "Higher running cost for a cost-sensitive project."
+        }
+      ],
+      "tradeoffs": [
+        "Vertical scaling first; very high write scale needs read replicas/partitioning."
+      ]
+    },
+    "hosting": {
+      "choice": "Google Cloud (Cloud Run + Cloud SQL)",
+      "justification": "First-class support for the chosen framework(s). Cloud Run scales containers to zero; Mumbai/Delhi regions; full compliance coverage.",
+      "driven_by": [
+        "budget.monthly_infra_usd",
+        "team.has_devops",
+        "infrastructure.deployment_model",
+        "infrastructure.data_residency",
+        "compliance",
+        "infrastructure.cloud_preference"
+      ],
+      "alternatives": [
+        {
+          "choice": "Microsoft Azure (App Service + Azure SQL)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "AWS (EC2/ECS + RDS)",
+          "why_not": "Heavier to operate."
+        }
+      ],
+      "tradeoffs": [
+        "Cloud SQL costs at scale; some GCP services lag AWS in India regions."
+      ]
+    },
+    "supporting": [
+      {
+        "layer": "storage",
+        "choice": "Google Cloud Storage",
+        "justification": "Object storage with India regions.",
+        "driven_by": [
+          "requirements.file_media_storage"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "auth",
+        "choice": "Firebase Authentication",
+        "justification": "Managed auth with phone OTP and social providers; generous free tier.",
+        "driven_by": [
+          "requirements.auth",
+          "compliance",
+          "infrastructure.data_residency"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "queue",
+        "choice": "Celery (RabbitMQ/Redis)",
+        "justification": "The standard Python task queue.",
+        "driven_by": [
+          "requirements.realtime",
+          "scale.traffic_pattern",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "other",
+        "choice": "SQLite on-device store + background sync API",
+        "justification": "Offline-first mobile: field data is captured into an embedded SQLite store on the device and synced to the server database when connectivity returns (append-only sync with server-side conflict rules).",
+        "driven_by": [
+          "requirements.offline_support",
+          "project.platforms"
+        ],
+        "alternatives": [],
+        "tradeoffs": [
+          "Sync conflicts need explicit resolution rules."
+        ]
+      },
+      {
+        "layer": "ci_cd",
+        "choice": "GitHub Actions",
+        "justification": "CI/CD next to the code; free tier covers small teams.",
+        "driven_by": [
+          "timeline.mvp_weeks"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "observability",
+        "choice": "Sentry (error tracking)",
+        "justification": "Error monitoring with a free tier; self-hostable if needed.",
+        "driven_by": [
+          "requirements.availability",
+          "team.has_devops"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      }
+    ]
+  },
+  "estimated_monthly_cost_usd": {
+    "min": 55,
+    "max": 296,
+    "assumptions": [
+      "~100 GB of storage/bandwidth at roughly $0.02-0.09/GB-month",
+      "Order-of-magnitude band, not a quote; real bills depend on traffic shape and discounts"
+    ]
+  },
+  "warnings": [],
+  "assumptions": [],
+  "validation_errors": []
+}

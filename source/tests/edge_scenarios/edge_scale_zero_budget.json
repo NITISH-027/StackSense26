@@ -1,0 +1,9 @@
+{
+  "scenario_id": "EDGE3",
+  "project": {"name": "ViralDream", "type": "social", "platforms": ["web", "android", "ios"]},
+  "scale": {"users_at_launch": 50000, "users_12_months": 2000000, "peak_concurrent_users": 100000, "traffic_pattern": "spiky"},
+  "team": {"size": 1, "experience": "beginner", "languages": ["javascript"]},
+  "budget": {"monthly_infra_usd": 0},
+  "timeline": {"mvp_weeks": 2},
+  "requirements": {"availability": "99.99"}
+}

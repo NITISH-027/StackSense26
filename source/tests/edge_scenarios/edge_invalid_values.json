@@ -1,0 +1,11 @@
+{
+  "scenario_id": "EDGE2",
+  "project": {"name": "Broken", "type": "webapp", "platforms": ["web", "smart_tv"]},
+  "scale": {"users_at_launch": -5, "users_12_months": "lots"},
+  "team": {"size": 0, "experience": "wizard", "languages": "python"},
+  "budget": {"monthly_infra_usd": -50},
+  "timeline": {"mvp_weeks": 0},
+  "requirements": {"availability": "100", "realtime": "yes"},
+  "compliance": ["gdpr", "sarbanes"],
+  "priorities": {"cost": 9, "speed": 3}
+}

@@ -1,0 +1,8 @@
+{
+  "scenario_id": "EDGE5",
+  "project": {"name": "LeaveBook", "type": "internal_tool", "platforms": ["web"]},
+  "scale": {"users_at_launch": 40, "users_12_months": 120},
+  "team": {"size": 1, "experience": "beginner", "languages": ["python"]},
+  "budget": {"monthly_infra_usd": 0},
+  "timeline": {"mvp_weeks": 3}
+}

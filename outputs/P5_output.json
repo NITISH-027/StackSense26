@@ -1,0 +1,171 @@
+{
+  "scenario_id": "P5",
+  "engine_version": "1.0.0",
+  "status": "ok",
+  "summary": "Monolith architecture: React (SPA, Vite) frontend, C# (.NET 8) backend, PostgreSQL database on Microsoft Azure (App Service + Azure SQL).",
+  "architecture_style": "monolith",
+  "stack": {
+    "frontend": {
+      "choice": "React (SPA, Vite)",
+      "justification": "Matches team language(s): javascript; well suited to internal_tool. Client-rendered React. Great for app-like UIs behind a login; weak for SEO-critical public pages.",
+      "driven_by": [
+        "project.platforms",
+        "requirements.seo_critical",
+        "team.languages",
+        "project.type"
+      ],
+      "alternatives": [
+        {
+          "choice": "Astro",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "SvelteKit",
+          "why_not": "Heavier to operate; higher running cost for a cost-sensitive project."
+        },
+        {
+          "choice": "Next.js (React)",
+          "why_not": "Heavier to operate; higher running cost for a cost-sensitive project."
+        }
+      ],
+      "tradeoffs": [
+        "Client rendering needs extra work for SEO and first-load performance."
+      ]
+    },
+    "backend": {
+      "choice": "C# (.NET 8)",
+      "justification": "Matches team language(s): csharp; well suited to internal_tool. Cross-platform and fast; strong in Microsoft-centric organisations.",
+      "driven_by": [
+        "project.type",
+        "team.languages",
+        "requirements.realtime",
+        "team.experience"
+      ],
+      "alternatives": [
+        {
+          "choice": "Node.js (Express)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Serverless functions (AWS Lambda / Cloud Run functions)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Node.js (NestJS, TypeScript)",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        }
+      ],
+      "tradeoffs": []
+    },
+    "database": {
+      "choice": "PostgreSQL",
+      "justification": "Well suited to internal_tool; fits a read_heavy workload. The default relational choice: JSONB, full-text search, strong integrity, huge ecosystem.",
+      "driven_by": [
+        "project.type",
+        "scale.workload",
+        "requirements.multi_tenant",
+        "scale.users_12_months"
+      ],
+      "alternatives": [
+        {
+          "choice": "SQLite",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "MySQL",
+          "why_not": "Scored lower on this scenario's specific priorities and constraints."
+        },
+        {
+          "choice": "Redis",
+          "why_not": "Higher running cost for a cost-sensitive project."
+        }
+      ],
+      "tradeoffs": [
+        "Vertical scaling first; very high write scale needs read replicas/partitioning."
+      ]
+    },
+    "hosting": {
+      "choice": "Microsoft Azure (App Service + Azure SQL)",
+      "justification": "First-class support for the chosen framework(s). Central India regions and full compliance coverage; natural home for .NET teams.",
+      "driven_by": [
+        "budget.monthly_infra_usd",
+        "team.has_devops",
+        "infrastructure.deployment_model",
+        "infrastructure.data_residency",
+        "compliance",
+        "infrastructure.cloud_preference"
+      ],
+      "alternatives": [],
+      "tradeoffs": [
+        "Portal complexity; pricing needs watching."
+      ]
+    },
+    "supporting": [
+      {
+        "layer": "storage",
+        "choice": "Azure Blob Storage",
+        "justification": "Object storage with Central India regions; pairs with Azure hosting.",
+        "driven_by": [
+          "requirements.file_media_storage"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "auth",
+        "choice": "Keycloak",
+        "justification": "Self-hosted identity provider; the standard for enterprise SSO/SAML/OIDC without SaaS.",
+        "driven_by": [
+          "requirements.auth",
+          "compliance",
+          "infrastructure.data_residency"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "queue",
+        "choice": "RabbitMQ",
+        "justification": "General-purpose message broker with flexible routing.",
+        "driven_by": [
+          "requirements.realtime",
+          "scale.traffic_pattern",
+          "team.languages"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "ci_cd",
+        "choice": "GitHub Actions",
+        "justification": "CI/CD next to the code; free tier covers small teams.",
+        "driven_by": [
+          "timeline.mvp_weeks"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      },
+      {
+        "layer": "observability",
+        "choice": "Sentry (error tracking)",
+        "justification": "Error monitoring with a free tier; self-hostable if needed.",
+        "driven_by": [
+          "requirements.availability",
+          "team.has_devops"
+        ],
+        "alternatives": [],
+        "tradeoffs": []
+      }
+    ]
+  },
+  "estimated_monthly_cost_usd": {
+    "min": 67,
+    "max": 330,
+    "assumptions": [
+      "Order-of-magnitude band, not a quote; real bills depend on traffic shape and discounts"
+    ]
+  },
+  "warnings": [],
+  "assumptions": [],
+  "validation_errors": []
+}

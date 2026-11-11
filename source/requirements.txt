@@ -1,0 +1,2 @@
+# StackSense runs on the Python 3.10+ standard library only.
+# There is intentionally nothing to install.

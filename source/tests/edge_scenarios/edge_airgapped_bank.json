@@ -1,0 +1,12 @@
+{
+  "scenario_id": "EDGE4",
+  "project": {"name": "VaultLedger", "type": "fintech", "platforms": ["web"]},
+  "scale": {"users_at_launch": 500, "users_12_months": 5000},
+  "team": {"size": 6, "experience": "senior", "languages": ["java", "python"], "has_devops": true},
+  "budget": {"monthly_infra_usd": 4000},
+  "timeline": {"mvp_weeks": 16},
+  "infrastructure": {"deployment_model": "air_gapped", "data_residency": "india", "existing_systems": ["Oracle DB"]},
+  "requirements": {"auth": "enterprise_sso", "file_media_storage": true, "payments": false, "realtime": false},
+  "compliance": ["rbi_localisation", "iso27001"],
+  "priorities": {"cost": 1, "time_to_market": 2, "scalability": 3, "performance": 3, "maintainability": 4, "security": 5}
+}

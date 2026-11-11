@@ -1,0 +1,69 @@
+{
+  "scenario_id": "P5",
+  "project": {
+    "name": "PeopleDesk",
+    "type": "internal_tool",
+    "description": "Leave requests, approvals and laptop/asset assignment for a 1,200-employee company. Used only by employees.",
+    "platforms": [
+      "web"
+    ]
+  },
+  "scale": {
+    "traffic_pattern": "steady",
+    "workload": "read_heavy",
+    "users_at_launch": 1200,
+    "users_12_months": 1500,
+    "peak_concurrent_users": 300,
+    "data_volume_gb_12_months": 20
+  },
+  "team": {
+    "has_devops": false,
+    "size": 2,
+    "experience": "intermediate",
+    "languages": [
+      "csharp",
+      "sql",
+      "javascript"
+    ]
+  },
+  "budget": {
+    "monthly_infra_usd": 300
+  },
+  "timeline": {
+    "mvp_weeks": 6
+  },
+  "infrastructure": {
+    "cloud_preference": "azure",
+    "deployment_model": "managed_cloud",
+    "data_residency": "india",
+    "existing_systems": [
+      "Microsoft Entra ID (Azure AD)",
+      "On-prem SQL Server 2019",
+      "Microsoft 365"
+    ]
+  },
+  "requirements": {
+    "realtime": false,
+    "offline_support": false,
+    "full_text_search": false,
+    "file_media_storage": true,
+    "payments": false,
+    "auth": "enterprise_sso",
+    "multi_tenant": false,
+    "ml_features": "none",
+    "seo_critical": false,
+    "availability": "99.9",
+    "p95_latency_ms": 800
+  },
+  "compliance": [
+    "iso27001"
+  ],
+  "priorities": {
+    "cost": 3,
+    "time_to_market": 5,
+    "scalability": 1,
+    "performance": 2,
+    "maintainability": 5,
+    "security": 4
+  }
+}

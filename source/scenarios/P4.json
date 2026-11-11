@@ -1,0 +1,70 @@
+{
+  "scenario_id": "P4",
+  "project": {
+    "name": "QuickCredit",
+    "type": "fintech",
+    "description": "Small personal loans with UPI disbursal and EMI collection. KYC document upload, credit scoring model, double-entry ledger.",
+    "platforms": [
+      "android",
+      "ios",
+      "web"
+    ]
+  },
+  "scale": {
+    "traffic_pattern": "spiky",
+    "workload": "balanced",
+    "users_at_launch": 10000,
+    "users_12_months": 300000,
+    "peak_concurrent_users": 10000,
+    "data_volume_gb_12_months": 500
+  },
+  "team": {
+    "has_devops": true,
+    "size": 8,
+    "experience": "senior",
+    "languages": [
+      "java",
+      "kotlin",
+      "typescript"
+    ]
+  },
+  "budget": {
+    "monthly_infra_usd": 6000
+  },
+  "timeline": {
+    "mvp_weeks": 16
+  },
+  "infrastructure": {
+    "cloud_preference": "aws",
+    "deployment_model": "managed_cloud",
+    "data_residency": "india",
+    "existing_systems": []
+  },
+  "requirements": {
+    "realtime": false,
+    "offline_support": false,
+    "full_text_search": false,
+    "file_media_storage": true,
+    "payments": true,
+    "auth": "phone_otp",
+    "multi_tenant": false,
+    "ml_features": "inference_api",
+    "seo_critical": false,
+    "availability": "99.95",
+    "p95_latency_ms": 300
+  },
+  "compliance": [
+    "rbi_localisation",
+    "pci_dss",
+    "dpdp",
+    "iso27001"
+  ],
+  "priorities": {
+    "cost": 2,
+    "time_to_market": 3,
+    "scalability": 4,
+    "performance": 3,
+    "maintainability": 4,
+    "security": 5
+  }
+}
